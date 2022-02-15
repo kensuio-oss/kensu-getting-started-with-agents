@@ -1,3 +1,6 @@
+import urllib3
+urllib3.disable_warnings()
+
 # setting up the conf file, for the getting started purpose we set the right configuration file for the month
 import os
 os.environ["CONF_FILE"] = "conf.ini"
