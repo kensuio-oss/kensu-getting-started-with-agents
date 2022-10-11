@@ -3,7 +3,7 @@ urllib3.disable_warnings()
 
 # setting up the conf file, for the getting started purpose we set the right configuration file for the month
 import os
-os.environ["CONF_FILE"] = "conf.ini"
+os.environ["KSU_CONF_FILE"] = "conf.ini"
 
 # init the library using the conf file
 from kensu.utils.kensu_provider import KensuProvider
