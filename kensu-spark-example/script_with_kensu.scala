@@ -1,9 +1,10 @@
 import org.apache.spark.sql.SparkSession
 
+// P.S. make sure you have downloaded the jar below
 val spark = SparkSession
   .builder()
   .appName("Example")
-  .config("spark.driver.extraClassPath", "kensu-spark-collector-1.0.0-rc466_spark-3.0.1.jar")
+  .config("spark.driver.extraClassPath", "kensu-spark-collector-1.0.0_spark-3.0.1.jar")
   .getOrCreate()
 
 
