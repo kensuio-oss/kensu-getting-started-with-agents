@@ -1,10 +1,14 @@
-from pyspark.sql import SparkSession
 from kensu.pyspark import init_kensu_spark
+from pyspark.sql import SparkSession
+
+# download kensu spark collector jar if doesn't exist in ../lib/
+from spark_collector_downloader import maybe_download_spark_collector, kensu_agent_jar_local_path
+maybe_download_spark_collector(kensu_agent_jar_local_path)
 
 
 #Add the path to the .jar to the SparkSession
 spark = SparkSession.builder.appName("Example")\
-    .config("spark.driver.extraClassPath", "kensu-dam-spark-collector-0.17.2_spark-3.0.1.jar")\
+    .config("spark.driver.extraClassPath", kensu_agent_jar_local_path)\
     .getOrCreate()
 
 #Init Kensu
@@ -20,3 +24,8 @@ contact_info = spark.read.option("inferSchema","true").option("header","true").c
 df = business_info.join(customers_info,['id']).join(contact_info,['id'])
 
 df.write.mode("overwrite").save("data/data")
+
+# Stop the Spark session after having sent the metadata
+import time
+time.sleep(30)
+spark.stop()
